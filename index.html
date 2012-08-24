@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link type="text/css" rel="stylesheet" href="style.css" />
+<script language="javascript" src="script.js"></script>
+
+<title>Search</title>
+</head>
+
+<body onload="initDHTMLAPI();">	
+
+<div id="wrapper">	
+	
+	<div id="formApplication">		
+		<b>Задание 1</b><br/>
+		<form>  
+                    
+                    <span >Сайт:</span>
+                    <input type="text" name="siteToSearch" id="siteToSearch" onkeyup="checkSite(this.form);" onchange="checkSite(this.form);"/>
+
+                            <a href="output.html" style="float:right;">Результаты поиска</a><br/>
+
+                    <span id="spanMethod" style="display:none;">Искать:</span>
+
+                    <select id="selectSearchMethod" size="1" onchange="searchMethod(this.form);" style="display:none;">
+                        <option value="selectLinks" selected="selected">ссылки</option>
+                        <option value="selectPictures">картинки</option>
+                        <option value="selectCustom">свой текст</option>
+                    </select><br/>
+
+                    <span id="spanPattern" style="display:none;">Pattern:</span>            
+                    <input type="text" name="searchPattern" id="searchPattern" style="display:none;"/><br/>
+
+                    <a href="javascript: sendSearchRequest();">Искать</a>
+                        
+		</form>			
+		
+		<div id="responseDiv">
+		</div>
+
+	</div>
+
+</div>
+
+</body>
+</html>

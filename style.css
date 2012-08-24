@@ -1,0 +1,53 @@
+/* CSS Document */
+
+html, body {
+	width:100%;
+	margin:0;
+	background-color:#FFF;
+	color:#000;
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size:16px;
+}
+
+a {
+	color:#4D90FE;
+}
+	a:hover{
+		text-decoration:none;
+	}
+
+	#wrapper {
+		width:100%;
+		position:relative;
+	}
+	
+		#formApplication {
+			position:relative;
+			padding:15px;
+			border-bottom:solid 1px #4D90FE;
+		}
+			#formApplication span {
+				display:inline-block;
+				width:60px;
+			}
+	#weather {
+		position:relative;
+		padding:15px;
+	}			
+/* =========================   Output ===============================*/
+table {
+	border:solid 1px #4D90FE;
+}
+	table td,th {
+		border-right:solid 1px #4D90FE;
+	}
+		table td input{
+			border:0px;
+			color:#4D90FE; 
+			background:#FFF; 
+			text-decoration:underline;
+		}
+			table td input:hover {
+				text-decoration:none;
+			}
+/
