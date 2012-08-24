@@ -13,6 +13,7 @@
 		KEY id_2(id)	
 		)";
 		
+	$mysqlLink->query($query);
 	$mysqlLink->close();
 		
 		
