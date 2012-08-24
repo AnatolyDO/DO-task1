@@ -13,8 +13,7 @@
 		KEY id_2(id)	
 		)";
 		
-		@mysql_query($query) or die("Error: $php_errormsg");
-		mysql_close();
+	$mysqlLink->close();
 		
 		
 ?>
