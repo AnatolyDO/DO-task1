@@ -3,8 +3,7 @@
 	                
         $query = "SELECT * FROM search";
         
-        $result = $mysqlLink->query($query);        
-	$resultObj = $result->fetch_object();
+        $result = $mysqlLink->query($query);  
 	
 	$mysqlLink->close();
 		
@@ -14,7 +13,7 @@
 		<tr> 
 			<th>id</th>
 			<th>url</th>
-			<th>elements</th>
+			<th style=\"display:none;\">elements</th>
 			<th>num</th>
 			<th>action</th>
 		</tr>
@@ -31,8 +30,8 @@
                 echo "
                     <tr>
                         <td>$id</td>
-                        <td>$url</td>
-                        <td>$elements</td>
+                        <td><a data-toggle=\"modal\" href=\"#foundModal\" onclick=\"showFound($id, this.text);\">$url</a></td>
+                        <td style=\"display:none;\">$elements</td>
                         <td>$num</td>
                         <td>
                             <form action='deleteLine.php' method='GET'>

@@ -12,8 +12,8 @@
 		UNIQUE id (id),			
 		KEY id_2(id)	
 		)";
-		
-	$mysqlLink->query($query);
+	
+        $mysqlLink->query($query);
 	$mysqlLink->close();
 		
 		

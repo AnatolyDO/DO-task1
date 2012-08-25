@@ -113,3 +113,16 @@ function loadAllData() {
 	xmlhttp_loadAll.open("GET", "selectAll.php", true);
 	xmlhttp_loadAll.send();
 }
+
+function showFound(id, name) {
+	xmlhttp_showFound = new XMLHttpRequest();
+	xmlhttp_showFound.onreadystatechange = function() {
+		if (xmlhttp_showFound.readyState == 4 && xmlhttp_showFound.status == 200){
+			getRawObject('foundModalBody').innerHTML = xmlhttp_showFound.responseText;
+                        getRawObject('foundModalHeader').innerHTML = name;
+                        
+		}	
+	}
+	xmlhttp_showFound.open("GET", "loadFound.php?searchId=" + id, true);
+	xmlhttp_showFound.send();  
+}
