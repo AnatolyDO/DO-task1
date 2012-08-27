@@ -10,9 +10,13 @@ class Controller_LoadFound {
     {
         $this->id = $_GET['searchId'];
         
-        //$valid_id = filter_var($searchId, FILTER_VALIDATE_INT);
+        if (filter_var($this->id, FILTER_VALIDATE_INT)) {
+           $this->model = new Model_LoadFound($this->id); 
+        } else {
+            echo 'id is not int';
+        }
         
-        $this->model = new Model_LoadFound($this->id);
+        
     }
     
     public function action_index() 
