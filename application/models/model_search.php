@@ -1,10 +1,6 @@
 <?php
-/**
- * Description of class
- *
- * @author Anatoly
- */
-class cURLSearch {    
+
+class Model_Search {    
         
     private $site = "Empty";  // URL для поиска
     private $patern = "Empty";  // метод поиска
@@ -15,7 +11,9 @@ class cURLSearch {
     private $resultString; // Строка найденных элементов
         
     //При создании экземпляра присваиваем сайт и метод.
-    public function __construct($site, $patern) {
+    public function __construct($site, $patern) 
+    {
+        
         if ($site) {
             $this->site = $site;
         }
@@ -25,31 +23,38 @@ class cURLSearch {
     }
     
     //Метод смены входных значений у того же объекта.
-    public function incData($site, $patern) {
+    public function incData($site, $patern) 
+    {
         $this->site = $site;
         $this->patern = $patern;
     }
     
     //проверяем какой код возвращает сайт
-    private function siteValidate($chURL) {	
-	if ($chURL == NULL) return false;
-	
-	$chURL = curl_init($chURL);
-	curl_setopt($chURL, CURLOPT_TIMEOUT, 5);
-	curl_setopt($chURL, CURLOPT_CONNECTTIMEOUT, 5);
-	curl_setopt($chURL, CURLOPT_RETURNTRANSFER, true);
-	curl_exec($chURL);
-	$httpcode = curl_getinfo($chURL, CURLINFO_HTTP_CODE);
-	curl_close($chURL);
-	if ($httpcode >= 200 && $httpcode < 400) {
-		return true;
-	} else {
-		return false;
-	}
+    public function siteValidate($chURL) 
+    {	
+	if ($chURL == NULL) {
+            return false;
+        } else {	
+            $chURL = curl_init($chURL);
+            curl_setopt($chURL, CURLOPT_TIMEOUT, 5);
+            curl_setopt($chURL, CURLOPT_CONNECTTIMEOUT, 5);
+            curl_setopt($chURL, CURLOPT_RETURNTRANSFER, true);
+            curl_exec($chURL);
+            $httpcode = curl_getinfo($chURL, CURLINFO_HTTP_CODE);
+            curl_close($chURL);
+            if ($httpcode >= 200 && $httpcode < 400) {
+                    return true;
+                    //echo 'site valid';
+            } else {
+                    return false;
+                    //echo 'site not valid';
+            }
+        }
     }
     
     //Метод возвращает содержимое сайта
-    private function cUrl($url) {
+    private function cUrl($url) 
+    {
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -77,7 +82,8 @@ class cURLSearch {
     }
     
     //выбираем шаблон поиcка в зависимости от выбранного метода
-    private function setRegExpString() {
+    private function setRegExpString() 
+    {
         switch ($this->patern) {
             case "findLinks":
                 $this->regExpString = '/(?<=href\=\")[\w\s\:\(\)\;.\?\_\/\.\=\&\%]+(?=\")/';
@@ -95,12 +101,28 @@ class cURLSearch {
     }
     
     //добавляем результат поиска в базу
-    private function DBinsert($itemString, $num) {
+    private function DBinsert($itemString, $num) 
+    {
         
         $maxStringLength = 1500;//проверяем длинну строки
         if (strlen($itemString) <= $maxStringLength) {
 
-            include('dbconnect.php');
+            //include('dbconnect.php');
+            $user	= "root";
+            $password	= "password";
+            $database	= "mydb";
+
+            //подключаемся 
+            $mysqlLink = new mysqli;
+            $mysqlLink->connect("localhost", $user, $password, $database);
+
+            if ($mysqlLink->connect_errno) {
+                echo "</br>Connect to DB failed ";// . $mysqlLink->connect_error;
+            }
+
+            //если проблемы с кодировкой...
+            $mysqlLink->query("SET NAMES utf8");
+            $mysqlLink->query( "SET CHARACTER SET utf8");
 
             $query = "INSERT INTO search VALUES (
                     '',
@@ -122,7 +144,8 @@ class cURLSearch {
     }
     
     //Метод проверяет отвечает ли сайт, присваивает нужный метод поиска и отправляет результаты поиска а базу через private метод DBinsert
-    public function search() {
+    public function search() 
+    {
         if ($this->siteValidate($this->site)){ //Проверяем валидность сайта
             
             $this->setRegExpString();  //Задаем строку поиска в зависимости от выбранного метода поиска
@@ -148,7 +171,8 @@ class cURLSearch {
         }
     }
     
-    public function printOut() {
+    public function printOut() 
+    {
         echo "Количество совпадений: <b>".$this->resultNum."</b><br/><br/>";
         if ($this->patern == "findLinks" || $this->patern == "findImages") {     
             foreach ($this->resultArray[0] as $item) {
@@ -159,7 +183,8 @@ class cURLSearch {
         }
     }
 
-    public function echoData() {
+    public function echoData() 
+    {
         echo $this->site . $this->patern;
     }
     

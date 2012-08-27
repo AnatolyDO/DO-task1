@@ -48,7 +48,7 @@ function checkSite(form) {
 	}
 }
 
-
+//Переключение вариантов поиска. Скрытие поля для ввода строки поиска.
 function searchMethod(form) {
 	if (form.selectSearchMethod.value == 'selectLinks') {
 		form.searchPattern.style.display = 'none';
@@ -67,7 +67,8 @@ function searchMethod(form) {
 		
 }
 
-
+//В зависимости от выбранного метода поиска устанавливаем значение переменной pattern
+//отправляем на сервер сайт для поиска и способ поиска
 function sendSearchRequest() {
 	
 	var site = getRawObject('siteToSearch').value;
@@ -96,13 +97,13 @@ function sendSearchRequest() {
 			getRawObject('responseDiv').innerHTML = xmlhttp_responseDiv.responseText;
 		}
 	}
-	xmlhttp_responseDiv.open("POST",'search.php',true);
+	xmlhttp_responseDiv.open("POST",'search',true);
 	xmlhttp_responseDiv.setRequestHeader('Content-type','application/x-www-form-urlencoded');
 	var request = 'siteToSearch='+site+'&searchPattern='+pattern;
 	xmlhttp_responseDiv.send(request);
 }
 
-
+//загрузка всех данных в таблицу
 function loadAllData() {
 	xmlhttp_loadAll = new XMLHttpRequest();
 	xmlhttp_loadAll.onreadystatechange = function() {
@@ -114,6 +115,7 @@ function loadAllData() {
 	xmlhttp_loadAll.send();
 }
 
+//загрузка детальной информации о поиске в всплывающее окно
 function showFound(id, name) {
 	xmlhttp_showFound = new XMLHttpRequest();
 	xmlhttp_showFound.onreadystatechange = function() {
@@ -123,6 +125,6 @@ function showFound(id, name) {
                         
 		}	
 	}
-	xmlhttp_showFound.open("GET", "loadFound.php?searchId=" + id, true);
+	xmlhttp_showFound.open("GET", "loadFound?searchId=" + id, true);
 	xmlhttp_showFound.send();  
 }
